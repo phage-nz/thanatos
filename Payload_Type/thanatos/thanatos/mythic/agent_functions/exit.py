@@ -23,6 +23,7 @@ class ExitCommand(CommandBase):
     version = 1
     is_exit = True
     author = "@M_alphaaa"
+    attackmapping = []
     supported_ui_features = ["callback_table:exit"]
     argument_class = ExitArguments
     attributes = CommandAttributes(

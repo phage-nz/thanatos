@@ -33,7 +33,8 @@
     "x86_64"
   ],
   "c2": [
-    "http"
+    "http",
+    "cloudflare"
   ],
   "mythic_version": "3.2",
   "agent_version": "0.1.14",

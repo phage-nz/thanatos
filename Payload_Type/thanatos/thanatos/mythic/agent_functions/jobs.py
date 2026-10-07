@@ -22,6 +22,7 @@ class JobsCommand(CommandBase):
     description = "List running background jobs."
     version = 1
     author = "@M_alphaaa"
+    attackmapping = []
     supported_ui_features = ["callback_table:jobs"]
     argument_class = JobsArguments
     attributes = CommandAttributes(

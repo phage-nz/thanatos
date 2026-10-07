@@ -42,6 +42,7 @@ class JobKillCommand(CommandBase):
     description = "Kill a job with the specified ID."
     version = 1
     author = "@M_alphaaa"
+    attackmapping = []
     argument_class = JobKillArguments
     attributes = CommandAttributes(
         supported_os=[SupportedOS.Linux, SupportedOS.Windows],

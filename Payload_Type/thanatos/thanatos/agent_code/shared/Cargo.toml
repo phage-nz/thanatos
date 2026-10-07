@@ -8,9 +8,11 @@ name = "thanatos_shared"
 crate-type = ["cdylib"]
 
 [dependencies]
-thanatos = { path = ".." }
+thanatos = { path = "..", default-features = false }
 ctor = { version = "0.4.2", optional = true }
 
 [features]
 onload = ["dep:ctor"]
 user = []
+http = ["thanatos/http"]
+cloudflare = ["thanatos/cloudflare"]

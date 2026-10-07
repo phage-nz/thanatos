@@ -53,6 +53,7 @@ class SetEnvCommand(CommandBase):
     description = "Sets an environment variable."
     version = 1
     author = "@M_alphaaa"
+    attackmapping = ["T1082"]
     argument_class = SetEnvArguments
     attributes = CommandAttributes(
         supported_os=[SupportedOS.Linux, SupportedOS.Windows],

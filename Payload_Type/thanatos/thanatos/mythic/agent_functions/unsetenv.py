@@ -43,6 +43,7 @@ class UnsetEnvCommand(CommandBase):
     description = "Unset an environment variable"
     version = 1
     author = "@M_alphaaa"
+    attackmapping = ["T1082"]
     supported_ui_features = ["unsetenv"]
     argument_class = UnsetEnvArguments
     attributes = CommandAttributes(

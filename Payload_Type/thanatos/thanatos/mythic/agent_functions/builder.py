@@ -116,7 +116,7 @@ class Thanatos(PayloadType):
         ),
     ]
     # Supported C2 profiles for thanatos
-    c2_profiles = ["http"]
+    c2_profiles = ["http", "cloudflare"]
 
     agent_path = pathlib.Path(".") / "thanatos" / "mythic"
     agent_code_path = pathlib.Path(".") / "thanatos" / "agent_code"
@@ -230,11 +230,18 @@ class Thanatos(PayloadType):
                     features.append("user")
                     command += f"THANATOS_SHARED_ENTRYPOINT='{export_name}' "
 
+                # The shared library links the agent crate without its default
+                # features, so the selected C2 profile must be passed through
+                features.append(profile)
+
             # Finish off the cargo command used for building the agent
             command += f"cargo build --target {target_os} --release"
 
             if build_shared:
                 command += " -p thanatos_shared"
+            elif profile == "cloudflare":
+                command += " --no-default-features"
+                features.append("cloudflare")
 
             if len(features) > 0:
                 command += f" --features {','.join(features)}"

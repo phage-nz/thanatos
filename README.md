@@ -15,14 +15,20 @@ To install Thanatos, you will need [Mythic](https://github.com/its-a-feature/Myt
 
 In the Mythic root directory, use `mythic-cli` to install the agent.
 ```bash
-sudo ./mythic-cli install github https://github.com/MythicAgents/thanatos
-sudo ./mythic-cli payload start thanatos
+sudo ./mythic-cli install github https://github.com/phage-nz/thanatos
+sudo ./mythic-cli start thanatos
 ```
 
 Thanatos supports the http C2 profile:  
 ```bash
 sudo ./mythic-cli install github https://github.com/MythicC2Profiles/http
-sudo ./mythic-cli c2 start http
+sudo ./mythic-cli start http
+```
+
+Thanatos also supports the cloudflare C2 profile (Cloudflare Queues dead-drop channel behind a Worker front door). Deploy the Worker and the queues first, following the setup guide in [phage-nz/nephele](https://github.com/phage-nz/nephele), then:
+```bash
+sudo ./mythic-cli install github https://github.com/phage-nz/nephele
+sudo ./mythic-cli start cloudflare
 ```
 
 ## Features
